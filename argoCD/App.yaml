@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-    source:
-    targetRevision: master
+    source: https://github.com/Digital-sam.git
+    targetRevision: main
     path: argoCD/nodejs-mongo-app
     directory:
       recurse: true
@@ -20,10 +20,10 @@ spec:
     sourceType: Directory
     sync:
       comparedTo:
-        destinatiion:
+        destination:
           namespace:
           server: https://kubernetes.default.svc
-        source:
-          path: nodejs-mongo-app
-          repoURL:
-          targetRevision: 
+        source: 
+          path: argoCD/nodejs-mongo-app
+          repoURL: https://github.com/Digital-sam.git
+          targetRevision: main
