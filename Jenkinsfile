@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('SCM checkout') {
             steps {
-                checkout scm: [$class: 'GITSCM',userRemoteConfigs: [[credentialsId: 'github-ssh-key', url: 'git@github.com:Digital-sam/declarative_CICD.git']]]
+                checkout scm: //scm with necessary cred to https://github.com/do-community/node-mongo-docker-dev
             }
         }
         
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                echo 'this is the deployment stage'
+                sh "cd ./argoCD/NodeJs-Mongoapp && deployment edit set image argoCD/Nodejs-Mongoapp:${env.GIT_COMMIT}"
             }
         }
     }
