@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodejs-mongo-app
+  namespace: argocd
+spec:
+  project: default
+    source:
+    targetRevision: master
+    path: argoCD/nodejs-mongo-app
+    directory:
+      recurse: true
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: nodejs-mongo-app
+    syncPolicy:
+      automated:
+        prune: false
+        selfHeal: true
+    sourceType: Directory
+    sync:
+      comparedTo:
+        destinatiion:
+          namespace:
+          server: https://kubernetes.default.svc
+        source:
+          path: nodejs-mongo-app
+          repoURL:
+          targetRevision: 
