@@ -9,6 +9,7 @@
 #### Get access to monitor your kubernetes cluster and how argocd does the changes
 ```
   kubectl port-forward svc/argocd-server -m argocd 8080:443
+```
 
 #### Argocd gets the polling of the state of deployment files and makes changes to the K8s cluster as changes are made to the application deployment file.
 
