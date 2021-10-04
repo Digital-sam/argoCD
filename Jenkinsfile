@@ -1,16 +1,32 @@
 pipeline {
     agent any
-    
+    triggers {
+        pollSCM 'H/10 * * * *'
+    }
     stages {
-        stage('SCM checkout') {
+        stage('checkout') {
             steps {
-                checkout scm: //scm with necessary cred to https://github.com/do-community/node-mongo-docker-dev
+                checkout([
+                    $class: 'SubversionSCM', 
+                    additionalCredentials: [], 
+                    excludedCommitMessages: '',
+                    locations: [[
+                        credentialsId: 'mySvnCredentials', 
+                        depthOption: 'infinity',
+                        ignoreExternalsOption: true, 
+                        local: '.', 
+                        remote: 'https://github.com/do-community/node-mongo-docker-dev']], 
+                    workspaceUpdater: [$class: 'CheckoutUpdater']
+                ])
             }
         }
-        
+    }
+}
+     
         stage('build') {
             steps {
                 container ('docker'){
+                    // delete older image
                     // build new image
                     sh "docker build -t argoCD/Nodejs-Mongoapp:${env.GIT_COMMIT}
 
